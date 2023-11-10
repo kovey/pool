@@ -30,5 +30,9 @@ func TestPools(t *testing.T) {
 	ctx := NewContext(context.Background())
 	obj := ctx.Get("test", "obj").(*objTest)
 	obj.Show()
+	obj = ctx.Get("test", "obj").(*objTest)
+	obj.Show()
+	obj = ctx.Get("test", "obj").(*objTest)
+	obj.Show()
 	ctx.Drop()
 }
