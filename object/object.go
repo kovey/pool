@@ -5,14 +5,20 @@ import (
 	"fmt"
 )
 
+type CtxInterface interface {
+	context.Context
+	Get(namespace, name string) ObjectInterface
+	GetNoCtx(namespace, name string) ObjNoCtxInterface
+}
+
 type ObjectInterface interface {
 	Reset()
-	Init(ctx context.Context)
+	Init(ctx CtxInterface)
 	FullName() string
 }
 
 type Object struct {
-	Ctx       context.Context
+	Ctx       CtxInterface
 	_fullName string
 }
 
@@ -24,7 +30,7 @@ func (o *Object) Reset() {
 	o.Ctx = nil
 }
 
-func (o *Object) Init(ctx context.Context) {
+func (o *Object) Init(ctx CtxInterface) {
 	o.Ctx = ctx
 }
 

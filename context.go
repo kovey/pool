@@ -57,3 +57,7 @@ func (c *Context) Reset() {
 
 	c.Context = nil
 }
+
+func (c *Context) Drop() {
+	poolsNoCtx.Put(c)
+}

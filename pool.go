@@ -1,7 +1,6 @@
 package pool
 
 import (
-	"context"
 	"fmt"
 	"sync"
 
@@ -10,7 +9,7 @@ import (
 
 type PoolInterface interface {
 	Put(object.ObjectInterface)
-	Get(context.Context) object.ObjectInterface
+	Get(object.CtxInterface) object.ObjectInterface
 	Name() string
 }
 
@@ -32,7 +31,7 @@ func (p *Pool) Put(obj object.ObjectInterface) {
 	p.p.Put(obj)
 }
 
-func (p *Pool) Get(ctx context.Context) object.ObjectInterface {
+func (p *Pool) Get(ctx object.CtxInterface) object.ObjectInterface {
 	val, ok := p.p.Get().(object.ObjectInterface)
 	if !ok {
 		return nil
@@ -60,7 +59,7 @@ func (p *Pools) Put(obj object.ObjectInterface) {
 	}
 }
 
-func (p *Pools) Get(namespace, name string, ctx context.Context) object.ObjectInterface {
+func (p *Pools) Get(namespace, name string, ctx object.CtxInterface) object.ObjectInterface {
 	if pool, ok := p.pools[fmt.Sprintf("%s.%s", namespace, name)]; ok {
 		return pool.Get(ctx)
 	}
@@ -82,10 +81,10 @@ func Put[T object.ObjectInterface](obj T) {
 	pools.Put(obj)
 }
 
-func Get[T object.ObjectInterface](namespace, name string, ctx context.Context) T {
+func Get[T object.ObjectInterface](namespace, name string, ctx object.CtxInterface) T {
 	return pools.Get(namespace, name, ctx).(T)
 }
 
-func GetObject(namespace, name string, ctx context.Context) object.ObjectInterface {
+func GetObject(namespace, name string, ctx object.CtxInterface) object.ObjectInterface {
 	return pools.Get(namespace, name, ctx)
 }
