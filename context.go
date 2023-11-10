@@ -17,6 +17,11 @@ func init() {
 	}))
 }
 
+type CtxInterface interface {
+	Get(namespace, name string) object.ObjectInterface
+	GetNoCtx(namespace, name string) object.ObjNoCtxInterface
+}
+
 func NewContext(parent context.Context) *Context {
 	ctx := GetNoCtx[*Context](ctx_namespace, ctx_name)
 	ctx.Context = parent
