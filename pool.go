@@ -74,6 +74,10 @@ func Reg(pool PoolInterface) {
 	pools.Reg(pool)
 }
 
+func Default(namespace, name string, new func() any) {
+	Reg(NewPool(namespace, name, new))
+}
+
 func Put[T object.ObjectInterface](obj T) {
 	pools.Put(obj)
 }

@@ -73,6 +73,10 @@ func RegNoCtx(pool PoolNoCtxInterface) {
 	poolsNoCtx.Reg(pool)
 }
 
+func DefaultNoCtx(namespace, name string, new func() any) {
+	RegNoCtx(NewPoolNoCtx(namespace, name, new))
+}
+
 func PutNoCtx[T object.ObjNoCtxInterface](obj T) {
 	poolsNoCtx.Put(obj)
 }
