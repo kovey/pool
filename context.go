@@ -50,6 +50,8 @@ func (c *Context) Reset() {
 		poolsNoCtx.Put(obj)
 	}
 
+	c.objs = nil
+	c.noCtxObjs = nil
 	c.Context = nil
 }
 
