@@ -19,19 +19,19 @@ func init() {
 
 func NewContext(parent context.Context) *Context {
 	ctx := GetNoCtx[*Context](ctx_namespace, ctx_name)
-	ctx.context = parent
+	ctx.Context = parent
 	return ctx
 }
 
 type Context struct {
 	*object.ObjNoCtx
-	context   context.Context
+	context.Context
 	noCtxObjs []object.ObjNoCtxInterface
 	objs      []object.ObjectInterface
 }
 
-func (c *Context) Context() context.Context {
-	return c.context
+func (c *Context) Parent() context.Context {
+	return c.Context
 }
 
 func (c *Context) Get(namespace, name string) object.ObjectInterface {
@@ -56,7 +56,7 @@ func (c *Context) Reset() {
 
 	c.objs = nil
 	c.noCtxObjs = nil
-	c.context = nil
+	c.Context = nil
 }
 
 func (c *Context) Drop() {

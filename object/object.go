@@ -6,9 +6,10 @@ import (
 )
 
 type CtxInterface interface {
-	Context() context.Context
+	context.Context
 	Get(namespace, name string) ObjectInterface
 	GetNoCtx(namespace, name string) ObjNoCtxInterface
+	Parent() context.Context
 }
 
 type ObjectInterface interface {
@@ -34,7 +35,7 @@ func (o *Object) Reset() {
 
 func (o *Object) Init(ctx CtxInterface) {
 	o.Ctx = ctx
-	o.Context = ctx.Context()
+	o.Context = ctx.Parent()
 }
 
 func (o *Object) FullName() string {
