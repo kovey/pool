@@ -6,7 +6,7 @@ import (
 )
 
 type CtxInterface interface {
-	context.Context
+	Context() context.Context
 	Get(namespace, name string) ObjectInterface
 	GetNoCtx(namespace, name string) ObjNoCtxInterface
 }
@@ -19,6 +19,7 @@ type ObjectInterface interface {
 
 type Object struct {
 	Ctx       CtxInterface
+	Context   context.Context
 	_fullName string
 }
 
@@ -28,10 +29,12 @@ func NewObject(namespace, name string) *Object {
 
 func (o *Object) Reset() {
 	o.Ctx = nil
+	o.Context = nil
 }
 
 func (o *Object) Init(ctx CtxInterface) {
 	o.Ctx = ctx
+	o.Context = ctx.Context()
 }
 
 func (o *Object) FullName() string {
